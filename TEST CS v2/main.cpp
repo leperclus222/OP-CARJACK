@@ -44,10 +44,8 @@ int main() {
             Sleep(1);
 
             continue;
-
         }
-    }
 
     return 0;
 
-}
+    }
