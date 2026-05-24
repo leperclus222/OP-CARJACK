@@ -12,38 +12,28 @@ int main() {
 
     bool programRunning = true;
 
-    printf("%p", &client);
-    
-    auto message1 = "DEBUG-CONSOLE Touche espace enfoncée avec success";
-    auto message2 = "DEBUG-CONSOLE Touche espace relachée avec success";
-
-    //Lire le process CS2
-
-    int jumpValue = 65537;
-    int releaseValue = 16777472; //via cheat engine
-
-    int newFov = 120;
-
     uintptr_t player = mem.Read<uintptr_t>(client + offsets::dwLocalPlayerPawn);
 
-    uintptr_t fov = mem.Read<uintptr_t>(player + offsets::m_pCameraServices);
-
-    int fovValue = mem.Read<int>(fov + offsets::m_iFOV);
-    std::cout << "valeur FOV VALUE " << fovValue << "\n";
-
-    std::cout << "valeur FOV VALUE " << newFov << "\n";
-
-    // mem.Write(fov + offsets::m_iFOV, newFov);
-
-    
+    auto valeurTemp = 0;
 
     while (programRunning) 
         {
-            mem.Write(fov + offsets::m_iFOV, newFov);
-            
-            Sleep(1);
+        uintptr_t localPlayer = mem.Read<uintptr_t>(client + offsets::dwLocalPlayerPawn);
+        uint8_t localTeam = mem.Read<uint8_t>(localPlayer + offsets::m_iTeamNum);
+        
+        uintptr_t entityList = mem.Read<uintptr_t>(client + offsets::dwEntityList);
 
-            continue;
+
+        for (int i = 0; i < 64; i++)
+        {
+            uintptr_t entry1 = mem.Read<uintptr_t>(entityList + (8 * (i & 0x7FFF) >> 9) + 16);
+        }
+            
+            //mem.Write(valeurTemp + offsets::m_iFOV, 120);
+            
+        Sleep(1);
+
+        continue;
         }
 
     return 0;
